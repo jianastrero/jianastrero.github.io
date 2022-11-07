@@ -3,19 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Jian Astrero</title>
+
+    <link rel="stylesheet" href="./css/jianastrero.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
-<body>
+<body class="flex justify-center">
+
+<div class="page">
+    <div class="w-full flex">
+        <div class="border-2 p-1 rounded-full" style="border-color: #00CFC1;">
+            <img
+                class="profile rounded-full"
+                alt="Jian Astrero"
+                src="https://media-exp1.licdn.com/dms/image/C4D03AQFd2heNlp2PWA/profile-displayphoto-shrink_800_800/0/1517858782048?e=1673481600&v=beta&t=k7a3y_f13qgxvIhOm4EZHCH5lGccaGWYEvBNIkn8suI"/>
+        </div>
+        <div class="flex flex-col self-center ml-4">
+            <div class="text-2xl">Jian James</div>
+            <div class="text-4xl font-bold">Astrero</div>
+        </div>
+        <div class="flex-1">
+
+        </div>
+    </div>
+    <div id="bio" class="mt-4 text-xs text-justify"></div>
+</div>
 
 <script type="module">
-    import PocketBase from '/js/pocketbase/pocketbase.es.mjs'
+    import PocketBase from './js/pocketbase/pocketbase.es.mjs'
 
     const client = new PocketBase('https://jianastrero-api.herokuapp.com')
+    updateBio(client)
 
-    // alternatively you can also fetch all records at once via getFullList:
-    const records = await client.records.getFullList('bio', 1, {sort: '-created',})
-
-    console.log("records", records)
+    /**
+     * Update Bio Section
+     * @param client {PocketBase}
+     */
+    async function updateBio(client) {
+        const divBio = document.getElementById("bio")
+        divBio.innerHTML = (await client.records.getFullList('bio', 1, {sort: '-created'}))[0].bio
+    }
 </script>
-
 </body>
 </html>

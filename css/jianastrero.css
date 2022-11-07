@@ -1,0 +1,30 @@
+body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: lightgray;
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.page {
+    /*aspect-ratio: 8.5 / 11;*/
+    width: 8.5in;
+    height: 11in;
+    margin-top: 40px;
+    padding: 0.5in;
+    background: white;
+
+    box-shadow: 0 0 16px 4px rgba(0,0,0,0.24);
+    -webkit-box-shadow: 0 0 16px 4px rgba(0,0,0,0.24);
+    -moz-box-shadow: 0 0 16px 4px rgba(0,0,0,0.24);
+}
+
+.profile {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+    aspect-ratio: 1;
+    width: 1in;
+}
