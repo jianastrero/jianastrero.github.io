@@ -25,15 +25,18 @@
                 alt="Jian Astrero"
                 src="https://media-exp1.licdn.com/dms/image/C4D03AQFd2heNlp2PWA/profile-displayphoto-shrink_800_800/0/1517858782048?e=1673481600&v=beta&t=k7a3y_f13qgxvIhOm4EZHCH5lGccaGWYEvBNIkn8suI"/>
         </div>
-        <div class="flex flex-col self-center ml-4">
+        <div class="flex-1 flex flex-col self-center ml-4">
             <div class="text-2xl">Jian James</div>
             <div class="text-4xl font-bold">Astrero</div>
+            <hr />
+            <div class="text-xl text-blue">Android Developer</div>
         </div>
-        <div class="flex-1">
-
-        </div>
+        <div id="links" class="ml-4 self-center"><div class="w-full h-full shimmerBG"></div></div>
     </div>
-    <div id="bio" class="mt-4 text-xs text-justify"></div>
+    <div id="bio" class="mt-4 text-xs text-justify"><div class="w-full h-24 shimmerBG"></div></div>
+    <hr class="mt-2" />
+    <div class="mt-2 text-xl font-bold">Education</div>
+    <div id="education" class="text-justify"><div class="w-full h-24 shimmerBG"></div></div>
 </div>
 
 <script type="module">
@@ -41,14 +44,84 @@
 
     const client = new PocketBase('https://jianastrero-api.herokuapp.com')
     updateBio(client)
+    updateLinks(client)
+    updateEducation(client)
 
     /**
      * Update Bio Section
-     * @param client {PocketBase}
+     * @param client {Client}
      */
     async function updateBio(client) {
         const divBio = document.getElementById("bio")
         divBio.innerHTML = (await client.records.getFullList('bio', 1, {sort: '-created'}))[0].bio
+    }
+
+    /**
+     * Update Links Section
+     * @param client {Client}
+     */
+    async function updateLinks(client) {
+        const divLinks = document.getElementById("links")
+        const links = await client.records.getFullList('links', 200, {sort: 'name'});
+        let linksHtml = ""
+
+        links.forEach(function (item) {
+            const icon = imgTag(item["@collectionId"], item["id"], item["icon"], 14, 14)
+            const link = aTag(item["label"], item["link"])
+            linksHtml += `<div class='m-1'>${icon}<div class="inline m-1"></div>${link}</div>`
+        })
+        divLinks.innerHTML = linksHtml
+    }
+
+    /**
+     * Update Links Section
+     * @param client {Client}
+     */
+    async function updateEducation(client) {
+        const divEducation = document.getElementById("education")
+        const education = await client.records.getFullList('education', 200, {sort: 'start_date'});
+        let educationHtml = ""
+
+        console.log("education", education)
+        education.forEach(function (item) {
+            const startDate = new Date(Date.parse(item['start_date']))
+            const endDate = new Date(Date.parse(item['end_date']))
+            educationHtml += `
+    <div class="flex">
+        <div class="flex flex-col">
+            <div class='text-xs text-end font-bold text-blue'>${startDate.getMonth() + 1}/${startDate.getFullYear()}</div>
+            <div class='text-xs text-end font-bold text-blue'>${endDate.getMonth() + 1}/${endDate.getFullYear()}</div>
+        </div>
+        <div class="flex flex-col ml-2">
+            <div class="text-sm font-bold">${item['school']}</div>
+            <div class="text-sm">${item['course']}</div>
+        </div>
+    </div>
+`
+        })
+        divEducation.innerHTML = educationHtml
+    }
+
+    /**
+     * Generate an Image
+     * @param collectionId {string}
+     * @param recordId {string}
+     * @param filename {string}
+     * @param width {number}
+     * @param height {number}
+     * @return {string}
+     */
+    function imgTag(collectionId, recordId, filename, width, height) {
+        return `<img class='inline' src='https://jianastrero-api.herokuapp.com/api/files/${collectionId}/${recordId}/${filename}' style='width: ${width}px; height: ${height}px'>`
+    }
+
+    /**
+     * Generate a link
+     * @param label {string}
+     * @param link {string}
+     */
+    function aTag(label, link) {
+        return `<a href="${link}" target="_blank" rel="noopener noreferrer">${label}</a>`
     }
 </script>
 </body>

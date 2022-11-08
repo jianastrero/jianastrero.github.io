@@ -9,6 +9,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.text-blue {
+    color: #00CFC1;
+}
+
 .page {
     /*aspect-ratio: 8.5 / 11;*/
     width: 8.5in;
@@ -23,8 +27,19 @@ body {
 }
 
 .profile {
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-    filter: grayscale(100%);
+    -webkit-filter: grayscale(60%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(60%);
     aspect-ratio: 1;
-    width: 1in;
+    width: 1.2in;
+}
+
+.shimmerBG {
+    animation-duration: 2.2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+    background: #ddd;
+    background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+    background-size: 1200px 100%;
 }
