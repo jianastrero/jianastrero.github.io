@@ -17,6 +17,24 @@ ul, li {
     color: #00CFC1;
 }
 
+.bg-blue {
+    background: rgb(0, 207, 193);
+}
+
+.progress-bar-container {
+    background: rgba(100, 100, 100, 0.24);
+    width: 24rem;
+    height: 1rem;
+    padding: 0.2rem;
+    border-radius: 9999px;
+}
+
+.progress-bar-progress {
+    background: rgba(0, 207, 193, 1);
+    height: 100%;
+    border-radius: 9999px;
+}
+
 .page {
     width: 8.5in;
     height: 11in;
