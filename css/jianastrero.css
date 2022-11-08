@@ -9,15 +9,18 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+ul, li {
+    list-style-type: circle;
+}
+
 .text-blue {
     color: #00CFC1;
 }
 
 .page {
-    /*aspect-ratio: 8.5 / 11;*/
     width: 8.5in;
     height: 11in;
-    margin-top: 40px;
+    margin-bottom: 40px;
     padding: 0.5in;
     background: white;
 
@@ -42,4 +45,17 @@ body {
     background: #ddd;
     background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
     background-size: 1200px 100%;
+}
+
+@media print {
+    .page {
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+        padding: 0;
+
+        box-shadow: 0 0 0 0 rgba(0,0,0,0);
+        -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+        -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    }
 }

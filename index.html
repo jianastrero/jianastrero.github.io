@@ -15,7 +15,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
-<body class="flex justify-center">
+<body class="flex flex-col items-center">
 
 <div class="page">
     <div class="w-full flex">
@@ -37,6 +37,12 @@
     <hr class="mt-2" />
     <div class="mt-2 text-xl font-bold">Education</div>
     <div id="education" class="text-justify"><div class="w-full h-24 shimmerBG"></div></div>
+    <hr class="mt-2" />
+    <div class="mt-2 text-xl font-bold">Work Experiences</div>
+    <div id="workExperiences" class="text-justify"><div class="w-full h-24 shimmerBG"></div></div>
+</div>
+<div class="page">
+    <div id="workExperiences2" class="text-justify"><div class="w-full h-24 shimmerBG"></div></div>
 </div>
 
 <script type="module">
@@ -46,6 +52,7 @@
     updateBio(client)
     updateLinks(client)
     updateEducation(client)
+    updateWorkExperience(client)
 
     /**
      * Update Bio Section
@@ -62,7 +69,7 @@
      */
     async function updateLinks(client) {
         const divLinks = document.getElementById("links")
-        const links = await client.records.getFullList('links', 200, {sort: 'name'});
+        const links = await client.records.getFullList('links', 200, {sort: 'name'})
         let linksHtml = ""
 
         links.forEach(function (item) {
@@ -79,10 +86,9 @@
      */
     async function updateEducation(client) {
         const divEducation = document.getElementById("education")
-        const education = await client.records.getFullList('education', 200, {sort: 'start_date'});
+        const education = await client.records.getFullList('education', 200, {sort: 'start_date'})
         let educationHtml = ""
 
-        console.log("education", education)
         education.forEach(function (item) {
             const startDate = new Date(Date.parse(item['start_date']))
             const endDate = new Date(Date.parse(item['end_date']))
@@ -100,6 +106,53 @@
 `
         })
         divEducation.innerHTML = educationHtml
+    }
+
+    /**
+     * Update Work Experience Section
+     * @param client {Client}
+     */
+    async function updateWorkExperience(client) {
+        const divWorkExperiences = document.getElementById("workExperiences")
+        const divWorkExperiences2 = document.getElementById("workExperiences2")
+        const workExperiences = await client.records.getFullList('work_experiences', 1, {sort: '-start_date'})
+        console.log("workExperiences", workExperiences)
+
+        let workExperiencesHtml1 = ""
+        let workExperiencesHtml2 = ""
+
+        workExperiences.forEach(function (item, index) {
+            const startDate = new Date(Date.parse(item['start_date']))
+            const endDate = new Date(Date.parse(item['end_date']))
+            let responsibilitiesHtml = "<ul>"
+
+            item['responsibilities'].forEach(function (responsibility) {
+                responsibilitiesHtml += `<li>${responsibility}</li>`
+            })
+
+            responsibilitiesHtml += "</ul>"
+
+            const workExperience = `
+    <div class="flex mt-2">
+        <div class="flex flex-col">
+            <div class='text-xs text-end font-bold text-blue'>${startDate.getMonth() + 1}/${startDate.getFullYear()}</div>
+            <div class='text-xs text-end font-bold text-blue'>${item['end_date'] === '' ? "Current" : (endDate.getMonth() + 1+'/'+endDate.getFullYear())}</div>
+        </div>
+        <div class="flex flex-col ml-2">
+            <div class="text-sm font-bold">${item['company']}</div>
+            <div class="text-sm">${item['job_title']}</div>
+            <div class="text-sm">${responsibilitiesHtml}</div>
+        </div>
+    </div>
+`
+            if (index < workExperiences.length - 1) {
+                workExperiencesHtml1 += workExperience
+            } else {
+                workExperiencesHtml2 += workExperience
+            }
+        })
+        divWorkExperiences.innerHTML = workExperiencesHtml1
+        divWorkExperiences2.innerHTML = workExperiencesHtml2
     }
 
     /**
