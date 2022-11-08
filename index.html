@@ -53,7 +53,10 @@
 <div class="page">
     <hr class="mt-2" />
     <div class="mt-2 text-xl font-bold">Languages</div>
-    <div id="languages" class="text-justify"><div class="w-full h-64 shimmerBG"></div></div>
+    <div id="languages" class="text-justify"><div class="w-full h-32 shimmerBG"></div></div>
+    <hr class="mt-2" />
+    <div class="mt-2 text-xl font-bold">Technologies</div>
+    <div id="technologies" class="text-justify"><div class="w-full h-96 shimmerBG"></div></div>
 </div>
 
 <script type="module">
@@ -67,6 +70,7 @@
     updateProjects(client)
     updateAchievements(client)
     updateLanguages(client)
+    updateTechnologies(client)
 
     /**
      * Update Bio Section
@@ -169,7 +173,7 @@
     }
 
     /**
-     * Update Work Experience Section
+     * Update Projects Section
      * @param client {Client}
      */
     async function updateProjects(client) {
@@ -190,7 +194,7 @@
     }
 
     /**
-     * Update Work Experience Section
+     * Update Achievements Section
      * @param client {Client}
      */
     async function updateAchievements(client) {
@@ -211,13 +215,12 @@
     }
 
     /**
-     * Update Work Experience Section
+     * Update Languages Section
      * @param client {Client}
      */
     async function updateLanguages(client) {
         const divAchievements = document.getElementById("languages")
         const languages = await client.records.getFullList('languages', 1, {sort: '-rating'})
-        console.log("languages", languages)
 
         let languagesHtml = ""
 
@@ -232,6 +235,30 @@
 `
         })
         divAchievements.innerHTML = languagesHtml
+    }
+
+    /**
+     * Update Technologies Section
+     * @param client {Client}
+     */
+    async function updateTechnologies(client) {
+        const divTechnologies = document.getElementById("technologies")
+        const technologies = await client.records.getFullList('technology', 1, {sort: '-rating'})
+        console.log("technologies", technologies)
+
+        let technologiesHtml = "<div class='flex w-full justify-between flex-wrap'>"
+
+        technologies.forEach(function (item, index) {
+            technologiesHtml += `
+    <div class="flex flex-col mt-2 width" style="width: 50%; box-sizing: border-box;">
+        <div class="text-sm font-bold">${item['name']}</div>
+        <div class="progress-bar-container border border-gray border-solid">
+            <div class="progress-bar-progress" style="width: ${item['rating']}%;"></div>
+        </div>
+    </div>
+`
+        })
+        divTechnologies.innerHTML = `${technologiesHtml}</div>`
     }
 
     /**

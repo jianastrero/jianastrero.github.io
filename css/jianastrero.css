@@ -23,7 +23,7 @@ ul, li {
 
 .progress-bar-container {
     background: rgba(100, 100, 100, 0.24);
-    width: 24rem;
+    width: 95%;
     height: 1rem;
     padding: 0.2rem;
     border-radius: 9999px;
