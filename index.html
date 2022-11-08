@@ -43,6 +43,9 @@
 </div>
 <div class="page">
     <div id="workExperiences2" class="text-justify"><div class="w-full h-24 shimmerBG"></div></div>
+    <hr class="mt-2" />
+    <div class="mt-2 text-xl font-bold">Projects</div>
+    <div id="projects" class="text-justify"><div class="w-full h-96 shimmerBG"></div></div>
 </div>
 
 <script type="module">
@@ -53,6 +56,7 @@
     updateLinks(client)
     updateEducation(client)
     updateWorkExperience(client)
+    updateProjects(client)
 
     /**
      * Update Bio Section
@@ -116,7 +120,6 @@
         const divWorkExperiences = document.getElementById("workExperiences")
         const divWorkExperiences2 = document.getElementById("workExperiences2")
         const workExperiences = await client.records.getFullList('work_experiences', 1, {sort: '-start_date'})
-        console.log("workExperiences", workExperiences)
 
         let workExperiencesHtml1 = ""
         let workExperiencesHtml2 = ""
@@ -153,6 +156,28 @@
         })
         divWorkExperiences.innerHTML = workExperiencesHtml1
         divWorkExperiences2.innerHTML = workExperiencesHtml2
+    }
+
+    /**
+     * Update Work Experience Section
+     * @param client {Client}
+     */
+    async function updateProjects(client) {
+        const divProjects = document.getElementById("projects")
+        const projects = await client.records.getFullList('projects', 1, {sort: '-name'})
+        console.log("projects", projects)
+
+        let projectsHtml = ""
+
+        projects.forEach(function (item, index) {
+            projectsHtml += `
+    <div class="flex flex-col mt-2">
+        <div class="text-sm font-bold">${item['name']}</div>
+        <div class="text-sm">${item['body']}</div>
+    </div>
+`
+        })
+        divProjects.innerHTML = projectsHtml
     }
 
     /**
