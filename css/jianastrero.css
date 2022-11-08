@@ -30,7 +30,7 @@ ul, li {
 }
 
 .progress-bar-progress {
-    background: rgba(0, 207, 193, 1);
+    background: #00cfc1;
     height: 100%;
     border-radius: 9999px;
 }
@@ -68,12 +68,13 @@ ul, li {
 @media print {
     body {
         padding: 0;
+        background: white;
     }
 
     .page {
         width: 100%;
         height: auto;
-        margin-bottom: 20px;
+        margin-bottom: 10rem;
         padding: 0;
 
         box-shadow: 0 0 0 0 rgba(0,0,0,0);

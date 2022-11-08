@@ -51,7 +51,6 @@
     <div id="achievements" class="text-justify"><div class="w-full h-64 shimmerBG"></div></div>
 </div>
 <div class="page">
-    <hr class="mt-2" />
     <div class="mt-2 text-xl font-bold">Languages</div>
     <div id="languages" class="text-justify"><div class="w-full h-32 shimmerBG"></div></div>
     <hr class="mt-2" />
@@ -238,7 +237,7 @@
     }
 
     /**
-     * Update Technologies Section
+     * Update Work Experience Section
      * @param client {Client}
      */
     async function updateTechnologies(client) {
@@ -253,7 +252,7 @@
     <div class="flex flex-col mt-2 width pr-2" style="width: 50%; box-sizing: border-box;">
         <div class="text-sm font-bold">${item['name']}</div>
         <div class="progress-bar-container border border-gray border-solid">
-            <div class="progress-bar-progress" style="width: ${item['rating']}%;"></div>
+            <div class="progress-bar-progress w-96" style="width: ${item['rating']}%;"></div>
         </div>
     </div>
 `
