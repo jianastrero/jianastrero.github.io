@@ -45,7 +45,10 @@
     <div id="workExperiences2" class="text-justify"><div class="w-full h-24 shimmerBG"></div></div>
     <hr class="mt-2" />
     <div class="mt-2 text-xl font-bold">Projects</div>
-    <div id="projects" class="text-justify"><div class="w-full h-96 shimmerBG"></div></div>
+    <div id="projects" class="text-justify"><div class="w-full h-64 shimmerBG"></div></div>
+    <hr class="mt-2" />
+    <div class="mt-2 text-xl font-bold">Achievements</div>
+    <div id="achievements" class="text-justify"><div class="w-full h-64 shimmerBG"></div></div>
 </div>
 
 <script type="module">
@@ -57,6 +60,7 @@
     updateEducation(client)
     updateWorkExperience(client)
     updateProjects(client)
+    updateAchievements(client)
 
     /**
      * Update Bio Section
@@ -144,7 +148,7 @@
         <div class="flex flex-col ml-2">
             <div class="text-sm font-bold">${item['company']}</div>
             <div class="text-sm">${item['job_title']}</div>
-            <div class="text-sm">${responsibilitiesHtml}</div>
+            <div class="text-xs">${responsibilitiesHtml}</div>
         </div>
     </div>
 `
@@ -173,11 +177,33 @@
             projectsHtml += `
     <div class="flex flex-col mt-2">
         <div class="text-sm font-bold">${item['name']}</div>
-        <div class="text-sm">${item['body']}</div>
+        <div class="text-xs">${item['body']}</div>
     </div>
 `
         })
         divProjects.innerHTML = projectsHtml
+    }
+
+    /**
+     * Update Work Experience Section
+     * @param client {Client}
+     */
+    async function updateAchievements(client) {
+        const divAchievements = document.getElementById("achievements")
+        const achievements = await client.records.getFullList('achievements', 1, {sort: '+title'})
+        console.log("achievements", achievements)
+
+        let achievementsHtml = ""
+
+        achievements.forEach(function (item, index) {
+            achievementsHtml += `
+    <div class="flex flex-col mt-2">
+        <div class="text-sm font-bold">${item['title']}</div>
+        <div class="text-xs">${item['body']}</div>
+    </div>
+`
+        })
+        divAchievements.innerHTML = achievementsHtml
     }
 
     /**
